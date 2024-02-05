@@ -22,7 +22,7 @@ jobs:
         run: |
           echo "mx=$(go run main.go generate-matrix)" >> $GITHUB_OUTPUT # into file $GITHUB_OUTPUT append line mx=...
   lint:
-    name: Check ${{ matrix.project }}
+    name: Check ${{ matrix.name }}
     runs-on: ubuntu-latest
     if: needs.generate-matrix.outputs.matrix != ''
     needs: [generate-matrix]

@@ -15,9 +15,10 @@ type Workflow struct {
 type Step struct {
 	Project string            `json:"project"`
 	Config  string            `json:"config"`
-	Args    []string          `json:"args"`
 	Name    string            `json:"name,omitempty"`
 	Env     map[string]string `json:"env,omitempty"`
+	Uses    string            `json:"uses,omitempty"`
+	With    map[string]string `json:"with,omitempty"`
 }
 
 func main() {
@@ -33,8 +34,8 @@ func main() {
 
 	wfl := Workflow{
 		LintJob: []Step{
-			{Project: "foo", Config: "Debug"},
-			{Project: "bar", Config: "Release"},
+			{Project: "foo", Config: "Debug", Name: "golangci-lint", With: map[string]string{"args": "--timeout=3m", "version": "v1.55.2"}},
+			{Project: "bar", Config: "Release", Name: "gitleaks", Env: map[string]string{"GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }", "GITLEAKS_LICENSE": "${{ secrets.GITLEAKS_LICENSE}}"}},
 		},
 	}
 
