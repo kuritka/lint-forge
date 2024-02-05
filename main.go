@@ -15,6 +15,9 @@ type Workflow struct {
 type Step struct {
 	Name string            `json:"name,omitempty"`
 	Env  map[string]string `json:"env,omitempty"`
+	// https://github.com/orgs/community/discussions/45342#discussioncomment-4778446
+	// The value for uses must be a literal. I'm not aware of any location in the docs that explicitly says so, but
+	// I've seen GitHub staff confirm it on this forum, with the rationale that it's needed to enforce restrictions on which actions/workflows can be called.
 	Uses string            `json:"uses,omitempty"`
 	With map[string]string `json:"with,omitempty"`
 }

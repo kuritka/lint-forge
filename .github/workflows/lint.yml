@@ -33,9 +33,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: ${{ matrix.name }}
-        uses: ${{ matrix.uses }}
-#        with:
-#          args: ${{ matrix.args }}
+      - run: echo ${{ matrix.name }}
+
     # TODO: investigate why actions are not executed from matrix!
     # TODO: start with no-json
