@@ -2,10 +2,23 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"lint-forge/installer"
 	"os"
 )
+
+type Workflow struct {
+	LintJob []Step `json:"include"`
+}
+
+type Step struct {
+	Project string            `json:"project"`
+	Config  string            `json:"config"`
+	Args    []string          `json:"args"`
+	Name    string            `json:"name,omitempty"`
+	Env     map[string]string `json:"env,omitempty"`
+}
 
 func main() {
 
@@ -17,9 +30,17 @@ func main() {
 		return
 	}
 	command := os.Args[1]
+
+	wfl := Workflow{
+		LintJob: []Step{
+			{Project: "foo", Config: "Debug"},
+			{Project: "bar", Config: "Release"},
+		},
+	}
+
 	if command == "generate-matrix" {
-		values := []int{1, 2, 3, 4, 5}
-		fmt.Printf("::set-output name=matrix::%v", values)
+		bytes, _ := json.Marshal(wfl)
+		fmt.Println(string(bytes))
 	} else {
 		fmt.Println("Invalid command. Usage: go run main.go generate")
 	}
